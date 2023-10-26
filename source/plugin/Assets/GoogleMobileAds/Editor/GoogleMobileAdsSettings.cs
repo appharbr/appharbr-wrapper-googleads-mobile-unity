@@ -42,6 +42,9 @@ namespace GoogleMobileAds.Editor
         private bool delayAppMeasurementInit;
 
         [SerializeField]
+        private bool enableFixKotlinBuildProcessor = true;
+
+        [SerializeField]
         private bool optimizeInitialization;
 
         [SerializeField]
@@ -55,6 +58,13 @@ namespace GoogleMobileAds.Editor
             get { return adMobAndroidAppId; }
 
             set { adMobAndroidAppId = value; }
+        }
+
+        public bool EnableFixKotlinBuildProcessor
+        {
+            get { return enableFixKotlinBuildProcessor ; }
+
+            set { enableFixKotlinBuildProcessor = value; }
         }
 
         public string GoogleMobileAdsIOSAppId

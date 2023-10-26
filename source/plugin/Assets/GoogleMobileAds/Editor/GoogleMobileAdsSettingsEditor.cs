@@ -11,6 +11,7 @@ namespace GoogleMobileAds.Editor
         SerializedProperty _appIdAndroid;
         SerializedProperty _appIdiOS;
         SerializedProperty _delayAppMeasurement;
+        SerializedProperty _enableFixKotlinBuildProcessor;
         SerializedProperty _optimizeInitialization;
         SerializedProperty _optimizeAdLoading;
         SerializedProperty _userTrackingUsageDescription;
@@ -27,6 +28,7 @@ namespace GoogleMobileAds.Editor
             _appIdAndroid = serializedObject.FindProperty("adMobAndroidAppId");
             _appIdiOS = serializedObject.FindProperty("adMobIOSAppId");
             _delayAppMeasurement = serializedObject.FindProperty("delayAppMeasurementInit");
+            _enableFixKotlinBuildProcessor = serializedObject.FindProperty("enableFixKotlinBuildProcessor");
             _optimizeInitialization = serializedObject.FindProperty("optimizeInitialization");
             _optimizeAdLoading = serializedObject.FindProperty("optimizeAdLoading");
             _userTrackingUsageDescription =
@@ -60,11 +62,23 @@ namespace GoogleMobileAds.Editor
             EditorGUI.indentLevel--;
             EditorGUILayout.Separator();
 
-            EditorGUILayout.LabelField("Android optimization settings", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("Android settings", EditorStyles.boldLabel);
             EditorGUI.indentLevel++;
 
             EditorGUI.BeginChangeCheck();
 
+#if !UNITY_2022_3_OR_NEWER
+            EditorGUILayout.PropertyField(_enableFixKotlinBuildProcessor,
+                              new GUIContent("Enable Kotlin dependency fix."));
+
+            if (settings.EnableFixKotlinBuildProcessor)
+            {
+                EditorGUILayout.HelpBox(
+                        "Adds instruction to fix build.gradle errors. "+
+                        "For more details see https://developers.google.com/admob/unity/gradle",
+                        MessageType.Info);
+            }
+#endif
             EditorGUILayout.PropertyField(_optimizeInitialization,
                                           new GUIContent("Optimize initialization"));
             if (settings.OptimizeInitialization) {
