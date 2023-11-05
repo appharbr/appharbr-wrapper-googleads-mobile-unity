@@ -26,6 +26,10 @@ import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowInsets;
 import android.widget.FrameLayout;
+
+import com.appharbr.sdk.engine.AppHarbr;
+import com.appharbr.sdk.engine.adformat.AdFormat;
+import com.appharbr.unity.mediation.AHUnityMediators;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -35,6 +39,7 @@ import com.google.android.gms.ads.BaseAdView;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.OnPaidEventListener;
 import com.google.android.gms.ads.ResponseInfo;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -86,6 +91,9 @@ public class Banner {
    * ads as required.
    */
   private View.OnLayoutChangeListener mLayoutChangeListener;
+  //************************************************************************//
+  private String adUnitId;
+  //************************************************************************//
 
   protected Banner() {}
 
@@ -279,6 +287,12 @@ public class Banner {
         });
 
     setLayoutChangeListener();
+      //************************************************************************//
+      if (AHUnityMediators.isWatchingAdUnitId(AdFormat.BANNER, publisherId)) {
+          this.adUnitId = publisherId;
+          AppHarbr.addBannerView(AHUnityMediators.mediationSdk, adView, AHUnityMediators.ahIncident);
+      }
+      //************************************************************************//
   }
 
   protected void setLayoutChangeListener() {
@@ -320,7 +334,7 @@ public class Banner {
    * @param request The {@link AdRequest} object with targeting parameters.
    */
   public void loadAd(final AdRequest request) {
-    unityPlayerActivity.runOnUiThread(
+      unityPlayerActivity.runOnUiThread(
         new Runnable() {
           @Override
           public void run() {
@@ -367,6 +381,9 @@ public class Banner {
           public void run() {
             Log.d(PluginUtils.LOGTAG, "Calling destroy() on Android");
             if (adView != null) {
+              //************************************************************************//
+                AHUnityMediators.unwatch(AdFormat.BANNER, adUnitId, adView);
+              //************************************************************************//
               adView.destroy();
               ViewParent parentView = adView.getParent();
               if (parentView instanceof ViewGroup) {
