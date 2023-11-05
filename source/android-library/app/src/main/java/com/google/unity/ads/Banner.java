@@ -26,6 +26,10 @@ import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowInsets;
 import android.widget.FrameLayout;
+
+import com.appharbr.sdk.engine.AppHarbr;
+import com.appharbr.sdk.engine.adformat.AdFormat;
+import com.appharbr.unity.mediation.AHUnityMediators;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
@@ -34,6 +38,7 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.OnPaidEventListener;
 import com.google.android.gms.ads.ResponseInfo;
+
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
@@ -85,6 +90,9 @@ public class Banner {
    * ads as required.
    */
   private View.OnLayoutChangeListener mLayoutChangeListener;
+  //************************************************************************//
+  private String adUnitId;
+  //************************************************************************//
 
   /**
    * Creates an instance of {@code Banner}.
@@ -276,6 +284,7 @@ public class Banner {
         });
 
 
+
     mLayoutChangeListener =
         new View.OnLayoutChangeListener() {
           @Override
@@ -306,6 +315,13 @@ public class Banner {
         .getDecorView()
         .getRootView()
         .addOnLayoutChangeListener(mLayoutChangeListener);
+		
+  	//************************************************************************//
+      if (AHUnityMediators.isWatchingAdUnitId(AdFormat.BANNER, publisherId)) {
+          this.adUnitId = publisherId;
+          AppHarbr.addBannerView(AHUnityMediators.mediationSdk, mAdView, AHUnityMediators.ahIncident);
+      }
+    //************************************************************************//
   }
 
   /**
@@ -361,6 +377,9 @@ public class Banner {
           public void run() {
             Log.d(PluginUtils.LOGTAG, "Calling destroy() on Android");
             if (mAdView != null) {
+              //************************************************************************//
+                AHUnityMediators.unwatch(AdFormat.BANNER, adUnitId, mAdView);
+              //************************************************************************//
               mAdView.destroy();
               ViewParent parentView = mAdView.getParent();
               if (parentView instanceof ViewGroup) {
