@@ -338,7 +338,7 @@ public class UnityRewardedAd {
     // Currently there is no rewardedAd.destroy() method. This method is a placeholder in case
     // there is any cleanup to do here in the future.
     //************************************************************************//
-      AHUnityMediators.unwatch(AdFormat.INTERSTITIAL, adUnitId, ahAdMobRewardedAd);
+      AHUnityMediators.unwatch(AdFormat.REWARDED, adUnitId, ahAdMobRewardedAd);
     //************************************************************************//
   }
 }
