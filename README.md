@@ -52,16 +52,9 @@ and import it into his project after importing the official Google Mobile Ads Un
 In addition, the publisher needs to download the AppHarbr SDK Unity Plugin from AppHarbr Dashboard and import it into his project:
 
 
-- Download and import the latest AppHarbr SDK version from AppHarbr Dashboard.
-- Download and import the [Google Mobile Ads Unity Plugin from the official releases](//github.com/googleads/googleads-mobile-unity/releases) repository.
-
-
-- Download from the releases the AppHarbr Wrapper Google Mobile Ads Unity Plugin unitypackage.
-- Go to Unity IDE -> Assets -> Import Package -> Custom Package...
-- Choose the downloaded AppHarbr Wrapper Google Mobile Ads Unity Plugin unitypackage and import.
-- Download from Publisher UI the AppHarbr SDK Unity Plugin.
-- Go to Unity IDE -> Assets -> Import Package -> Custom Package...
-- Choose the downloaded AppHarbr SDK Unity Plugin unitypackage and import.
+- Download from Publisher UI the AppHarbr SDK Unity Plugin and import (Unity IDE -> Assets -> Import Package -> Custom Package...).
+- Download the [Google Mobile Ads Unity Plugin from the official releases](//github.com/googleads/googleads-mobile-unity/releases) repository and import (Unity IDE -> Assets -> Import Package -> Custom Package...).
+- Download from the releases the [AppHarbr Wrapper Google Mobile Ads unitypackage](//github.com/appharbr/appharbr-wrapper-googleads-mobile-unity/releases) and import (Unity IDE -> Assets -> Import Package -> Custom Package...).
 
 
 ## Download
